@@ -1,4 +1,4 @@
-import * as firebase from "firebase/app";
+import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
@@ -12,6 +12,16 @@ const firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 }
+// オブジェクトを引数にしてfirebaseをイニシャライズ
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+// 外でも使用できるようにexport
+export const db = firebaseApp.firestore();
+export const auth = firebase.auth();
+export const storage = firebase.storage();
+
+// googleの認証昨日を使用する
+export const provider = new firebase.auth.GoogleAuthProvider();
 
   
   
