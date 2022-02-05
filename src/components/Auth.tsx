@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(https://source.unsplash.com/random)',
+    backgroundImage: 'url(https://images.unsplash.com/photo-1640622842223-e1e39f4bf627?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -58,6 +58,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Auth: React.FC = () => {
   const classes = useStyles();
+  const singInGoogle = async () => {
+   await auth.signInWithPopup(provider).catch((err) => alert(err.message));
+  };
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -103,6 +106,16 @@ const Auth: React.FC = () => {
             >
               Sign In
             </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={singInGoogle}
+            >
+              SignIn with Google
+            </Button>
+
           </form>
         </div>
       </Grid>

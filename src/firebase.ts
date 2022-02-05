@@ -20,7 +20,7 @@ export const db = firebaseApp.firestore();
 export const auth = firebase.auth();
 export const storage = firebase.storage();
 
-// googleの認証昨日を使用する
+// googleの認証機能を使用する
 export const provider = new firebase.auth.GoogleAuthProvider();
 
   
