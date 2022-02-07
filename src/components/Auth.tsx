@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import styles from "./Auth.module.css";
-import { useDispatch } from "react-redux";
-import { auth, provider, storage } from "../firebase";
+import React, { useState } from 'react'
+import styles from './Auth.module.css'
+import { useDispatch } from 'react-redux'
+import { auth, provider, storage } from '../firebase'
 
 import {
   Avatar,
-  Button, 
+  Button,
   CssBaseline,
   TextField,
   Paper,
@@ -15,25 +15,26 @@ import {
   Modal,
   IconButton,
   Box,
-} from "@material-ui/core";
+} from '@material-ui/core'
 
-import sendIcon from "@material-ui/icons/Send";
-import CameraIcon from "@material-ui/icons/Camera";
-import EmailIcon from "@material-ui/icons/Email";
-import LockOutlinedIcon from "@material-ui/icons/LockOpenOutlined";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-
-
+import sendIcon from '@material-ui/icons/Send'
+import CameraIcon from '@material-ui/icons/Camera'
+import EmailIcon from '@material-ui/icons/Email'
+import LockOutlinedIcon from '@material-ui/icons/LockOpenOutlined'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(https://images.unsplash.com/photo-1640622842223-e1e39f4bf627?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80)',
+    backgroundImage:
+      'url(https://images.unsplash.com/photo-1640622842223-e1e39f4bf627?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+      theme.palette.type === 'light'
+        ? theme.palette.grey[50]
+        : theme.palette.grey[900],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   },
@@ -54,13 +55,24 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-}));
+}))
 
 const Auth: React.FC = () => {
-  const classes = useStyles();
+  const classes = useStyles()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [isLogin, setIsLogin] = useState(true)
+
+  const signInEmail = async () => {
+    await auth.signInWithEmailAndPassword(email, password)
+  }
+  const signUpEmail = async () => {
+    await auth.createUserWithEmailAndPassword(email, password)
+  }
+
   const singInGoogle = async () => {
-   await auth.signInWithPopup(provider).catch((err) => alert(err.message));
-  };
+    await auth.signInWithPopup(provider).catch((err) => alert(err.message))
+  }
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -85,6 +97,10 @@ const Auth: React.FC = () => {
               name="email"
               autoComplete="email"
               autoFocus
+              value={email}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setEmail(e.target.value)
+              }}
             />
             <TextField
               variant="outlined"
@@ -96,6 +112,9 @@ const Auth: React.FC = () => {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setPassword(e.target.value)
+              }}
             />
             <Button
               type="submit"
@@ -115,11 +134,10 @@ const Auth: React.FC = () => {
             >
               SignIn with Google
             </Button>
-
           </form>
         </div>
       </Grid>
     </Grid>
-  );
+  )
 }
-export default Auth;
+export default Auth
