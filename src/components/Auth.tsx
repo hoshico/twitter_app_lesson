@@ -84,7 +84,7 @@ const Auth: React.FC = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            {isLogin ? 'Login' : 'Register'}
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -123,8 +123,21 @@ const Auth: React.FC = () => {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              {isLogin ? 'Login' : 'Register'}
             </Button>
+            <Grid container>
+              <Grid item xs>
+                <span className={styles.login_reset}>Forgot password?</span>
+              </Grid>
+              <Grid item xs>
+                <span
+                  className={styles.login_toggleMode}
+                  onClick={() => setIsLogin(!isLogin)}
+                >
+                  {isLogin ? 'Create new account ?' : 'Back to login'}
+                </span>
+              </Grid>
+            </Grid>
             <Button
               fullWidth
               variant="contained"
