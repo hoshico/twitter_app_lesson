@@ -17,7 +17,7 @@ import {
   Box,
 } from '@material-ui/core'
 
-import sendIcon from '@material-ui/icons/Send'
+import SendIcon from '@material-ui/icons/Send'
 import CameraIcon from '@material-ui/icons/Camera'
 import EmailIcon from '@material-ui/icons/Email'
 import LockOutlinedIcon from '@material-ui/icons/LockOpenOutlined'
@@ -64,8 +64,8 @@ const Auth: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true)
 
   const signInEmail = async () => {
-    await auth.signInWithEmailAndPassword(email, password)
-  }
+    await auth.signInWithEmailAndPassword(email, password);
+  };
   const signUpEmail = async () => {
     await auth.createUserWithEmailAndPassword(email, password)
   }
@@ -112,7 +112,8 @@ const Auth: React.FC = () => {
               type="password"
               id="password"
               autoComplete="current-password"
-              value={(e: React.ChangeEvent<HTMLInputElement>) => {
+              value={password}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setPassword(e.target.value)
               }}
             />
@@ -126,16 +127,16 @@ const Auth: React.FC = () => {
                 isLogin
                   ? async () => {
                       try {
-                        await signInEmail()
-                      } catch (err: any) {
-                        alert(err.message)
+                        await signInEmail();
+                      } catch (err:any) {
+                        alert(err.message);
                       }
                     }
                   : async () => {
                       try {
-                        await signUpEmail()
-                      } catch (err: any) {
-                        alert(err.message)
+                        await signUpEmail();
+                      } catch (err:any) {
+                        alert(err.message);
                       }
                     }
               }
