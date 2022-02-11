@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styles from './Auth.module.css'
 import { useDispatch } from 'react-redux'
+import { updateUserProfile } from "../features/userSlice";
 import { auth, provider, storage } from '../firebase'
 
 import {
@@ -58,14 +59,15 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Auth: React.FC = () => {
-  const classes = useStyles()
+  const classes = useStyles();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
   const [avatarImage, setAvatarImage] = useState<File | null>(null)
   const [isLogin, setIsLogin] = useState(true)
 
-  const onChangeImgageHadler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeImgageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files![0]) {
       setAvatarImage(e.target.files![0])
       e.target.value = ''
@@ -88,7 +90,17 @@ const Auth: React.FC = () => {
       await storage.ref(`avatars/${fileName}`).put(avatarImage)
       url = await storage.ref('avatars').child(fileName).getDownloadURL()
     }
-  }
+    await authUser.user?.updateProfile({
+      displayName: username,
+      photoURL: url,
+    });
+    dispatch(
+      updateUserProfile({
+        displayName: username,
+        photoUrl: url,
+      })
+    )
+  };
 
   const singInGoogle = async () => {
     await auth.signInWithPopup(provider).catch((err) => alert(err.message))
