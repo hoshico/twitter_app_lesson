@@ -139,15 +139,15 @@ const Auth: React.FC = () => {
                 <Box textAlign="center">
                   <IconButton>
                     <label>
-                      <AccountCircleIcon 
+                      <AccountCircleIcon
                         fontSize="large"
                         className={
                           avatarImage
-                          ? styles.login_addIconLoaded
-                          : styles.login_addIcon
+                            ? styles.login_addIconLoaded
+                            : styles.login_addIcon
                         }
                       />
-                      <input 
+                      <input
                         className={styles.login_hiddenIcon}
                         type="file"
                         onChange={onChangeImageHandler}
@@ -188,6 +188,11 @@ const Auth: React.FC = () => {
               }}
             />
             <Button
+              disabled={
+                isLogin
+                  ? !email || password.length < 6
+                  : !username || !email || password.length < 6 || !avatarImage
+              }
               fullWidth
               variant="contained"
               color="primary"
