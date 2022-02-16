@@ -121,7 +121,7 @@ const Auth: React.FC = () => {
       const randomChar = Array.from(crypto.getRandomValues(new Uint32Array(N)))
         .map((n) => S[n % S.length])
         .join('')
-      const fileName = randomChar + '_' + avatarImage.name
+      const fileName = randomChar + '_' + avatarImage.name;
       await storage.ref(`avatars/${fileName}`).put(avatarImage)
       url = await storage.ref('avatars').child(fileName).getDownloadURL()
     }

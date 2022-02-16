@@ -10,7 +10,7 @@ import AddPhotoIcon from "@material-ui/icons/AddAPhoto";
 const TweetInput = () => {
   const user = useSelector(selectUser);
   const [tweetImage, setTweetImage] = useState<File | null>(null);
-  const [tweetMag, setTweetMsg] = useState("");
+  const [tweetMsg, setTweetMsg] = useState("");
   const onChangeImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files![0]) {
       setTweetImage(e.target.files![0])
@@ -19,7 +19,46 @@ const TweetInput = () => {
   }
   const sendTweet = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+    if (tweetImage) {
+      const S = 'abcdefghijklmnopqrstuvwxwzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+      const N = 16
+      const randomChar = Array.from(crypto.getRandomValues(new Uint32Array(N)))
+        .map((n) => S[n % S.length])
+        .join('')
+      const fileName = randomChar + '_' + tweetImage.name;
+      const uploadTweetImg = storage.ref(`images/${fileName}`).put(tweetImage);
+      uploadTweetImg.on(
+        firebase.storage.TaskEvent.STATE_CHANGED,
+
+        () => {},
+        (err) => {
+          alert(err.message);
+        }, async () => {
+          await storage.ref("images").child(fileName).getDownloadURL().then(
+            async (url) => {
+              await db.collection("posts").add({
+                avatar: user.photoUrl,
+                image: url,
+                text: tweetMsg,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                username: user.displayName,
+              })
+            }
+          )
+        }
+      )
+    }
+    else {
+      db.collection("posts").add({
+        avatar: user.photoUrl,
+        image: "",
+        text: tweetMsg,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        username: user.displayName,
+      });
+    }
+    setTweetImage(null);
+    setTweetMsg("");
   };
   return (
     <div>
