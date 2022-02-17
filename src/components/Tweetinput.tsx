@@ -61,15 +61,36 @@ const TweetInput = () => {
     setTweetMsg("");
   };
   return (
-    <div>
-      <Avatar
-        className={styles.tweet_avatar}
-        src={user.photoUrl}
-        onClick={async () => {
-          await auth.signOut()
-        }}
-      />
-    </div>
+    <>
+    <form onSubmit={sendTweet}>
+      <div className={styles.tweet_form}>
+        <Avatar
+          className={styles.tweet_avatar}
+          src={user.photoUrl}
+          onClick={async () => {
+            await auth.signOut()
+          }}
+        />
+        <input 
+          className={styles.tweet_input}
+          placeholder="What's happening?"
+          type="text"
+          autoFocus
+          value={tweetMsg}
+          onChange={(e) => setTweetMsg(e.target.value)}
+        />
+        <IconButton>
+          <label>
+            <AddPhotoIcon
+              className={
+                tweetImage ? styles.tweet_addIconLoaded : styles.tweet_addIcon
+              }
+            />
+          </label>
+        </IconButton>
+      </div>
+    </form>
+    </>
   )
 }
 
