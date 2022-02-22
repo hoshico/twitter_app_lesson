@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import styles from "../Post.module.css";
+import styles from "./Post.module.css";
 import { db } from "../firebase";
 import firebase from "firebase/app";
 import { useSelector  } from 'react-redux';
@@ -39,6 +39,11 @@ const Post: React.FC<PROPS> = (props) => {
           <div className={styles.post_tweet}>
             <p>{props.text}</p>
           </div>
+          {props.image && (
+            <div className={styles.post_tweetImage}>
+              <img src={props.image} alt="tweet" />
+            </div>
+          )}
         </div>
       </div>
     </div>
