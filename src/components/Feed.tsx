@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import styles from './Feed.module.css'
 import { db } from '../firebase'
 import Post from './Post'
-import TweetInput from './Tweetinput'
+import TweetInput from './TweetInput'
+
 
 const Feed: React.FC = () => {
   const [posts, setPosts] = useState([
