@@ -4,7 +4,6 @@ import { db } from '../firebase'
 import Post from './Post'
 import TweetInput from './TweetInput'
 
-
 const Feed: React.FC = () => {
   const [posts, setPosts] = useState([
     {
